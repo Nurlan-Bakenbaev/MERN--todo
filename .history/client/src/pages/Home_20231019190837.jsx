@@ -61,7 +61,7 @@ const Home = () => {
         console.log(error);
       }
     },
-    [getTodo]
+    [todos]
   );
   const completedTodo = useCallback(
     async (id) => {
@@ -99,7 +99,7 @@ const Home = () => {
   );
   useEffect(() => {
     getTodo();
-  }, [todos, getTodo]);
+  }, [getTodo]);
   return (
     <div className="w-[80%] mx-auto ">
       {isLogin ? (

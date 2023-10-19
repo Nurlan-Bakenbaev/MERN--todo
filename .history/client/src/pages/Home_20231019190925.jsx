@@ -10,7 +10,7 @@ const Home = () => {
   const { userId } = useContext(AuthContext);
   const [text, setText] = useState("");
   const [todos, setTodos] = useState([]);
-
+  
   const getTodo = useCallback(async () => {
     try {
       const response = await axios.get("http://localhost:4000/api/todo", {
@@ -99,7 +99,7 @@ const Home = () => {
   );
   useEffect(() => {
     getTodo();
-  }, [todos, getTodo]);
+  }, [todos,g]);
   return (
     <div className="w-[80%] mx-auto ">
       {isLogin ? (
