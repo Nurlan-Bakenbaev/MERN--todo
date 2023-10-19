@@ -13,15 +13,12 @@ const Home = () => {
 
   const getTodo = useCallback(async () => {
     try {
-      const response = await axios.get(
-        "https://todo-server-api.onrender.com/api/todo",
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          params: { userId },
-        }
-      );
+      const response = await axios.get("https://todo-server-api.onrender.com/api/todo", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: { userId },
+      });
       setTodos(response.data);
     } catch (error) {
       console.log(error);
@@ -70,12 +67,9 @@ const Home = () => {
     async (id) => {
       try {
         await axios
-          .put(
-            `https://todo-server-api.onrender.com/api/todo/completed/${id}`,
-            {
-              headers: { "Content-Type": "application/json" },
-            }
-          )
+          .put(`https://todo-server-api.onrender.com/api/todo/completed/${id}`, {
+            headers: { "Content-Type": "application/json" },
+          })
           .then((response) => {
             setTodos((prevTodos) => [...prevTodos, response.data]);
             getTodo();
@@ -90,12 +84,9 @@ const Home = () => {
     async (id) => {
       try {
         await axios
-          .put(
-            `https://todo-server-api.onrender.com/api/todo/important/${id}`,
-            {
-              headers: { "Content-Type": "application/json" },
-            }
-          )
+          .put(`http://localhost:4000/api/todo/important/${id}`, {
+            headers: { "Content-Type": "application/json" },
+          })
           .then((response) => {
             setTodos((prevTodos) => [...prevTodos, response.data]);
             getTodo();

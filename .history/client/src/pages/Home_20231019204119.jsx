@@ -13,15 +13,12 @@ const Home = () => {
 
   const getTodo = useCallback(async () => {
     try {
-      const response = await axios.get(
-        "https://todo-server-api.onrender.com/api/todo",
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          params: { userId },
-        }
-      );
+      const response = await axios.get("https://todo-server-api.onrender.com/api/todo", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: { userId },
+      });
       setTodos(response.data);
     } catch (error) {
       console.log(error);
@@ -32,7 +29,7 @@ const Home = () => {
     try {
       await axios
         .post(
-          "https://todo-server-api.onrender.com/api/todo/add",
+          "http://localhost:4000/api/todo/add",
           { text, userId },
           {
             headers: { "Content-Type": "application/json" },
@@ -53,7 +50,7 @@ const Home = () => {
       try {
         await axios
           .delete(
-            `https://todo-server-api.onrender.com/api/todo/delete/${id}`,
+            `http://localhost:4000/api/todo/delete/${id}`,
             { id },
             {
               headers: { "Content-Type": "application/json" },
@@ -70,12 +67,9 @@ const Home = () => {
     async (id) => {
       try {
         await axios
-          .put(
-            `https://todo-server-api.onrender.com/api/todo/completed/${id}`,
-            {
-              headers: { "Content-Type": "application/json" },
-            }
-          )
+          .put(`http://localhost:4000/api/todo/completed/${id}`, {
+            headers: { "Content-Type": "application/json" },
+          })
           .then((response) => {
             setTodos((prevTodos) => [...prevTodos, response.data]);
             getTodo();
@@ -90,12 +84,9 @@ const Home = () => {
     async (id) => {
       try {
         await axios
-          .put(
-            `https://todo-server-api.onrender.com/api/todo/important/${id}`,
-            {
-              headers: { "Content-Type": "application/json" },
-            }
-          )
+          .put(`http://localhost:4000/api/todo/important/${id}`, {
+            headers: { "Content-Type": "application/json" },
+          })
           .then((response) => {
             setTodos((prevTodos) => [...prevTodos, response.data]);
             getTodo();

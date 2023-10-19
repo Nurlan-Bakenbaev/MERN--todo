@@ -1,86 +1,88 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import axios from "axios";
-import { useState, useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
-
   const [form, setForm] = useState({
+    name: "",
     email: "",
     password: "",
   });
-  const { login } = useContext(AuthContext);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
 
-  const loginHandler = async () => {
+  const registerHandler = async () => {
     try {
-      const response = await axios
-        .post(
-          "https://todo-server-api.onrender.com/api/auth/login",
-          { ...form },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((response) => {
-          if (response) {
-            navigate("/home");
-          }
+      const response = await axios.post(
+        "http://localhost:4000/api/auth/registration",
+        { ...form },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-          login(response.data.token, response.data.userId, response.data.email);
-        });
+      navigate("/home");
+      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 shadow-md rounded-md sm:w-1/2 lg:w-1/3">
-        <h1 className="text-2xl font-semibold mb-4 text-center">Login</h1>
+        <h1 className="text-2xl font-semibold mb-4 text-center">
+          Create account
+        </h1>
         <form onSubmit={(e) => e.preventDefault()}>
+          <div className="mb-4">
+            <label className="block text-gray-600">Name</label>
+            <input
+              onChange={handleInputChange}
+              name="name"
+              placeholder="Will Smith"
+              type="text"
+              className="w-full border rounded-md py-2 px-3"
+            />
+          </div>
           <div className="mb-4">
             <label className="block text-gray-600">Email</label>
             <input
-              name="email"
               onChange={handleInputChange}
+              name="email"
               placeholder="example@gmail.com"
               type="email"
               className="w-full border rounded-md py-2 px-3"
-              required
             />
           </div>
+
           <div className="mb-6">
             <label className="block text-gray-600">Password</label>
             <input
-              name="password"
               onChange={handleInputChange}
+              name="password"
               type="password"
               className="w-full border rounded-md py-2 px-3"
-              required
             />
           </div>
           <div className="flex flex-col gap-3">
             <button
-              onClick={loginHandler}
-              className="w-full bg-blue-500
-              hover:bg-blue-800 text-white rounded-md py-2"
+              type="button" 
+              onClick={registerHandler}
+              className="w-full bg-blue-500 hover:bg-blue-800 text-white rounded-md py-2"
             >
-              Log In
+              Register
             </button>
-            <Link to="/">
-              <p
-                className="text-right
-               hover:text-blue-500 
-               cursor-pointer text-gray-500"
-              >
-                Create an account?
+            <Link to="/login">
+              <p className="text-right hover:text-blue-500 cursor-pointer text-gray-500">
+                Have an account?
               </p>
             </Link>
           </div>
@@ -90,4 +92,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
